@@ -1,0 +1,56 @@
+version: "3.7"
+services:
+    neda-app:
+        build:
+            args:
+                user: sammy
+                uid: 1001
+            context: ./docker-compose/Docker
+            dockerfile: Dockerfile
+        image: neda-app
+        container_name: neda-app
+        restart: unless-stopped
+        working_dir: /var/www/
+        ports:
+            - 9090:80
+        volumes:
+            - ./:/var/www
+        networks:
+            - neda
+
+    db:
+        image: mysql:5.7
+        container_name: neda-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - ./docker-compose/neda-db:/var/lib/mysql/
+            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+        ports:
+            - 3360:3306
+        networks:
+            - neda
+
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=db
+            - PMA_PORT=3306
+        depends_on:
+            - db
+        ports:
+            - 8119:80
+        networks:
+            - neda
+
+networks:
+    neda:
+        external:
+            name: neda
