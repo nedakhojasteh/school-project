@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EmploymentDegreeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Employment extends Model
@@ -14,5 +15,9 @@ class Employment extends Model
         'telephone',
         'address',
         'degree'
+    ];
+
+    protected $casts = [
+        'degree' => EmploymentDegreeEnum::class
     ];
 }
