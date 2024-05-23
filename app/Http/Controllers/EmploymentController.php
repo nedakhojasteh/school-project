@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employment\EmploymentRequest;
 use App\Http\Resource\Employment\EmploymentResource;
 use App\Models\Employment;
+use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 
 class EmploymentController extends Controller
@@ -49,6 +50,12 @@ class EmploymentController extends Controller
     public function delete(Employment $employment): JsonResponse
     {
         $employment->delete();
+
+        return response()->json(EmploymentResource::make($employment));
+    }
+    public function storeRole(Employment $employment, Role $role): JsonResponse
+    {
+        $employment->roles()->attach($role->id);
 
         return response()->json(EmploymentResource::make($employment));
     }

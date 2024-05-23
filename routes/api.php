@@ -15,5 +15,6 @@ Route::post('employment/', [EmploymentController::class, 'store']);
 Route::get('employment/{employment}', [EmploymentController::class, 'show']);
 Route::put('employment/{employment}', [EmploymentController::class, 'update']);
 Route::delete('employment/{employment}', [EmploymentController::class, 'delete']);
-Route::delete('employment/{employment}/rule/{rule}', [EmploymentController::class, 'delete']);
+
+Route::post('employment/{employment}/rule/{rule}', [EmploymentController::class, 'storeRole']);
 

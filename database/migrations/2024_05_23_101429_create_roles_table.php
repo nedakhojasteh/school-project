@@ -9,7 +9,7 @@ return new class {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->uniqe();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

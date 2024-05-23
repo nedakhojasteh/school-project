@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-class Role
-{
-    protected string $table = 'rules';
+use App\Enums\RoleNameEnum;
+use Illuminate\Database\Eloquent\Model;
 
-    protected $fillabale = [
+class Role extends Model
+{
+    protected $table = 'roles';
+
+    protected $fillable = [
         'name',
         'slug'
     ];
-    protected array $cast = [
-        'name' => RuleNameEnum::class
+    protected $casts = [
+        'name' => RoleNameEnum::class
     ];
 }
