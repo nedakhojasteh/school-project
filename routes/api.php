@@ -12,4 +12,7 @@ Route::delete('school/{school}', [SchoolController::class, 'destroy']);
 
 Route::get('employment/', [EmploymentController::class, 'index']);
 Route::post('employment/', [EmploymentController::class, 'store']);
+Route::get('employment/{employment}', [EmploymentController::class, 'show']);
+Route::put('employment/{employment}', [EmploymentController::class, 'update']);
+Route::delete('employment/{employment}', [EmploymentController::class, 'delete']);
 

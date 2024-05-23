@@ -28,4 +28,28 @@ class EmploymentController extends Controller
 
         return response()->json(EmploymentResource::make($employment));
     }
+
+    public function show(Employment $employment): JsonResponse
+    {
+        return response()->json(EmploymentResource::make($employment));
+    }
+
+    public function update(EmploymentRequest $request, Employment $employment): JsonResponse
+    {
+        $employment->name = $request->validated('name');
+        $employment->family = $request->validated('family');
+        $employment->telephone = $request->validated('telephone');
+        $employment->address = $request->validated('address');
+        $employment->degree = $request->validated('degree');
+        $employment->save();
+
+        return response()->json(EmploymentResource::make($employment));
+    }
+
+    public function delete(Employment $employment): JsonResponse
+    {
+        $employment->delete();
+
+        return response()->json(EmploymentResource::make($employment));
+    }
 }
