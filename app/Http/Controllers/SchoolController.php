@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleNameEnum;
 use App\Http\Requests\School\StoreRequest;
 use App\Http\Requests\School\UpdateRequest;
 use App\Http\Resource\School\SchoolResource;
+use App\Models\Employment;
 use App\Models\School;
+use Illuminate\Http\Client\Request;
 use Illuminate\Http\JsonResponse;
 
 class SchoolController extends Controller
@@ -19,7 +22,14 @@ class SchoolController extends Controller
 
     public function store(StoreRequest $request): JsonResponse
     {
+        abort_if(
+            Employment::find($request->validated('manager'))->roles()->wherePivot('slug', RoleNameEnum::MANAGER->value)->doesntExist(),
+            422,
+            __('validation.custom.employment.role.not-exist')
+        );
+
         $school = new School();
+        $school->manager_id = $request->validated('manager');
         $school->name = $request->validated('name');
         $school->address = $request->validated('address');
         $school->telephone = $request->validated('telephone');
@@ -33,6 +43,12 @@ class SchoolController extends Controller
 
     public function update(UpdateRequest $request, School $school): JsonResponse
     {
+        abort_if(
+            Employment::find($request->validated('manager'))->roles()->wherePivot('slug', RoleNameEnum::MANAGER->value)->doesntExist(),
+            422,
+            'کاربر مورد نظر شرایط را ندارد'
+        );
+        $school->manager_id = $request->validated('manager');
         $school->name = $request->validated('name');
         $school->address = $request->validated('address');
         $school->telephone = $request->validated('telephone');
