@@ -16,5 +16,12 @@ Route::get('employment/{employment}', [EmploymentController::class, 'show']);
 Route::put('employment/{employment}', [EmploymentController::class, 'update']);
 Route::delete('employment/{employment}', [EmploymentController::class, 'delete']);
 
-Route::post('employment/{employment}/rule/{rule}', [EmploymentController::class, 'storeRole']);
+Route::get('role/', [\App\Http\Controllers\RoleController::class, 'index']);
+Route::post('role/', [\App\Http\Controllers\RoleController::class, 'store']);
+Route::get('role/{role}', [\App\Http\Controllers\RoleController::class, 'show']);
+Route::put('role/{role}', [\App\Http\Controllers\RoleController::class, 'update']);
+Route::delete('role/{role}', [\App\Http\Controllers\RoleController::class, 'delete']);
+
+Route::post('employment/{employment}/role/{role}', [EmploymentController::class, 'storeRole']);
+Route::delete('employment/{employment}/role/{role}', [EmploymentController::class, 'deleteRole']);
 
