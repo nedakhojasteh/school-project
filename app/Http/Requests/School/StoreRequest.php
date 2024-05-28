@@ -13,6 +13,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'manager' => ['required', 'integer', 'exists:employments,id'],
             'name' => ['required', 'min:2'],
             'address' => ['required', 'string', 'min:10', 'max:255'],
             'telephone' => ['required', 'string', 'size:11'],
