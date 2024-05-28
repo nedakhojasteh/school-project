@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('role_employment', function (Blueprint $table) {
             $table->id();
-            $table->foreign('employment_id')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreign('role_id')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('employment_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('role_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamps();
 
             $table->unique(['employment_id', 'role_id'], 'unique_employment_role');
