@@ -59,4 +59,12 @@ class EmploymentController extends Controller
 
         return response()->json(EmploymentResource::make($employment));
     }
+
+    public function deleteRole(Employment $employment, Role $role):JsonResponse
+    {
+        $employment->roles()->detach($role->id);
+
+        return response()->json(EmploymentResource::make($employment));
+    }
+
 }
