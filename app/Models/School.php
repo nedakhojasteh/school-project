@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\SchoolDistrictEnum;
 use App\Enums\SchoolTypeEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class School extends Model
 {
@@ -24,5 +25,10 @@ class School extends Model
             'type' => SchoolTypeEnum::class,
             'district' => SchoolDistrictEnum::class,
         ];
+    }
+
+    public  function employment():BelongsTo
+    {
+        return $this->belongsTo(Employment::class);
     }
 }
