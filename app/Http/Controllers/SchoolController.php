@@ -43,11 +43,7 @@ class SchoolController extends Controller
 
     public function update(UpdateRequest $request, School $school): JsonResponse
     {
-        abort_if(
-            Employment::find($request->validated('manager'))->roles()->wherePivot('slug', RoleNameEnum::MANAGER->value)->doesntExist(),
-            422,
-            'کاربر مورد نظر شرایط را ندارد'
-        );
+
         $school->manager_id = $request->validated('manager');
         $school->name = $request->validated('name');
         $school->address = $request->validated('address');
