@@ -122,5 +122,7 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    'default_page_size' => env('DEFAULT_PAGE_SIZE', 2),
+    'default_page' => env('DEFAULT_PAGE')
 
 ];
