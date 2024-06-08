@@ -3,31 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Enums\RoleNameEnum;
+use App\Http\Requests\School\IndexRequest;
 use App\Http\Requests\School\StoreRequest;
 use App\Http\Requests\School\UpdateRequest;
 use App\Http\Resource\School\SchoolResource;
 use App\Models\Employment;
 use App\Models\School;
+use App\Traits\GeneralControllerTrait;
+use http\Env\Response;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\JsonResponse;
 
 class SchoolController extends Controller
 {
-    public function index(): JsonResponse
-    {
-        $schools = School::query()->get();
+    use GeneralControllerTrait;
 
-        return response()->json(SchoolResource::collection($schools));
+    public function index(IndexRequest $request): JsonResponse
+    {
+        $query = School::query();
+        $paginate = $this->paginate($query, $request);
+
+        return response()->json([
+            'count' => $paginate['count'],
+            'data' => SchoolResource::collection($paginate['data'])
+
+        ]);
     }
 
     public function store(StoreRequest $request): JsonResponse
     {
-        abort_if(
-            Employment::find($request->validated('manager'))->roles()->wherePivot('slug', RoleNameEnum::MANAGER->value)->doesntExist(),
-            422,
-            __('validation.custom.employment.role.not-exist')
-        );
-
         $school = new School();
         $school->manager_id = $request->validated('manager');
         $school->name = $request->validated('name');
@@ -43,7 +47,6 @@ class SchoolController extends Controller
 
     public function update(UpdateRequest $request, School $school): JsonResponse
     {
-
         $school->manager_id = $request->validated('manager');
         $school->name = $request->validated('name');
         $school->address = $request->validated('address');
