@@ -16,4 +16,9 @@ class Role extends Model
     protected $casts = [
         'name' => RoleNameEnum::class
     ];
+
+    public function getRouteKeyName():string
+    {
+        return 'slug';
+    }
 }
