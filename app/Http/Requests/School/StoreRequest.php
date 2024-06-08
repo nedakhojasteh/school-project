@@ -4,6 +4,7 @@ namespace App\Http\Requests\School;
 
 use App\Enums\SchoolDistrictEnum;
 use App\Enums\SchoolTypeEnum;
+use App\Rules\RoleControlRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -13,7 +14,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'manager' => ['required', 'integer', 'exists:employments,id'],
+            'manager' => ['required', 'integer', 'exists:employments,id', new RoleControlRule],
             'name' => ['required', 'min:2'],
             'address' => ['required', 'string', 'min:10', 'max:255'],
             'telephone' => ['required', 'string', 'size:11'],
