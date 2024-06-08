@@ -27,7 +27,7 @@ class School extends Model
         ];
     }
 
-    public  function employment():BelongsTo
+    public  function manager():BelongsTo
     {
         return $this->belongsTo(Employment::class);
     }
