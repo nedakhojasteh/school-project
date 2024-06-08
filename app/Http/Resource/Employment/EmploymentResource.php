@@ -13,6 +13,7 @@ class EmploymentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
             'name' => $this->name,
             'family' => $this->family,
             'telephone' => $this->telephone,
